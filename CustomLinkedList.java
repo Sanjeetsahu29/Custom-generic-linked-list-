@@ -9,4 +9,13 @@ public class CustomLinkedList<T> {
             this.next = null;
         }
     }
+    private Node head;
+    private Node tail;
+    private int size;
+    public CustomLinkedList(){
+        this.head=null;
+        this.tail=null;
+        this.size=0;
+    }
+
 }
