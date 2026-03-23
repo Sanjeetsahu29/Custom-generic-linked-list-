@@ -168,5 +168,21 @@ public class CustomLinkedList<T> {
         tail = null;
         size = 0;
     }
+    // Helper to print the list easily
+    @Override
+    public String toString(){
+        if(isEmpty()) return "[]";
+        StringBuilder sb = new StringBuilder("[");
+        Node currentNode = head;
+        while(currentNode!=null){
+            sb.append(currentNode.data);
+            if(currentNode.next!=null){
+                sb.append(" -> ");
+            }
+            currentNode = currentNode.next;
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 
 }
