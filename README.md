@@ -302,4 +302,23 @@ Example output:
 [10 -> 20 -> 30]
 ```
 
+```
+public static void main(String[] args) {
+        // 1. Create a new instance of our custom linked list.
+        // We specify <Integer> so the list knows what type of data to expect.
+        CustomLinkedList<Integer> numbersList = new CustomLinkedList<>();
 
+        // 2. Add 5 elements. Behind the scenes, this creates 5 distinct Node objects
+        // and links their 'next' pointers together.
+        numbersList.add(10); // Head node
+        numbersList.add(20);
+        numbersList.add(30);
+        numbersList.add(40);
+        numbersList.add(50); // Tail node
+
+        // 3. Print the list to see the result
+        System.out.println("My 5-node list: " + numbersList.toString());
+        System.out.println("Total nodes: " + numbersList.size());
+    }
+```
+I have added a simple main method to demonstrate object instantiation, generic type binding, and end-to-end behavior validation of the custom linked list.
