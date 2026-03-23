@@ -46,3 +46,50 @@ I have introduced three core state variables—head, tail, and size—along with
 
 All three fields are marked as private, which again reinforces the Encapsulation principle—the internal state of the list cannot be directly accessed or mutated from outside the class. This ensures that structural invariants (like correct head/tail linkage and accurate size tracking) are only modified through controlled operations.
 
+```
+    public void add(T data){
+        addLast(data);
+    }
+    
+    public boolean isEmpty(){
+        return size == 0;
+    }
+
+    public void addFirst(T data){
+        Node newNode = new Node(data);
+        if(isEmpty()){
+            head = tail = newNode;
+        }else{
+            newNode.next = head;
+            head = newNode; 
+        }
+        size++;
+    }
+    
+    public void addLast(T data){
+        Node newNode  = new Node(data);
+        if(isEmpty()){
+            head = tail = newNode;
+        }else{
+            tail.next = newNode;
+            tail = newNode;
+        }
+        size++;
+    }
+```
+I have added a set of insertion operations that define how elements enter the linked list, along with a utility method to check the list state. The design here closely mirrors standard collection behavior while maintaining strict control over structural integrity.
+
+The add(T data) method acts as a semantic abstraction, delegating to addLast(data). This aligns with standard Java collections where add() typically appends to the end. The key idea is API consistency—users of this class get predictable behavior without needing to know internal details.
+
+The isEmpty() method is a small but important addition. Instead of repeatedly checking size == 0 across methods, I’ve centralized that logic. This improves readability, maintainability, and intent clarity, and avoids duplication of condition logic.
+
+In addFirst(T data), I am performing an insertion at the head in O(1) time:
+- A new node is created
+- If the list is empty, both head and tail point to the same node
+- Otherwise, the new node links to the current head, and head is updated
+
+In addLast(T data), I leverage the tail pointer for O(1) append:
+- If empty → same handling as addFirst
+- Otherwise → current tail.next points to new node, and tail is advanced
+
+Across both methods, I increment size in a controlled manner, ensuring state consistency—the structural change (node addition) and metadata update (size) are tightly coupled.
