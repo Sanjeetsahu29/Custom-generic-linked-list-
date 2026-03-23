@@ -93,3 +93,37 @@ In addLast(T data), I leverage the tail pointer for O(1) append:
 - Otherwise → current tail.next points to new node, and tail is advanced
 
 Across both methods, I increment size in a controlled manner, ensuring state consistency—the structural change (node addition) and metadata update (size) are tightly coupled.
+
+```
+public void addAt(int index, T data){
+        if(index<0 || index>size) throw new IndexOutOfBoundsException("Invalid Index");
+        if(index == 0){
+            addFirst(data);
+            return;
+        }
+        if(index == size){
+            addLast(data);
+            return;
+        }
+        Node newNode = new Node(data);
+        Node currentNode = head;
+        for (int i = 0; i < index-1; i++) {
+            currentNode = currentNode.next;
+        }
+        newNode.next = currentNode.next;
+        currentNode.next = newNode;
+        size++;
+    }
+
+```
+
+I have added a positional insertion method addAt(int index, T data) to allow inserting an element at any arbitrary index, which introduces index-based access semantics on top of a sequential data structure.
+
+The first important aspect is defensive boundary validation:
+- I explicitly check index < 0 || index > size to prevent illegal memory access patterns.
+- Allowing index == size is intentional, as it represents a valid append operation.
+
+Then I handle edge cases explicitly:
+- index == 0 → delegate to addFirst(data)
+- index == size → delegate to addLast(data)
+
