@@ -265,3 +265,41 @@ I have implemented a complete set of removal operations that cover all major del
 
 ```
 I have added retrieval and utility operations that expose read access and state management without violating the internal structure of the linked list. These methods are intentionally designed to be simple, predictable, and consistent with standard collection semantics.
+
+```
+ // Helper to print the list easily
+    @Override
+    public String toString(){
+        if(isEmpty()) return "[]";
+        StringBuilder sb = new StringBuilder("[");
+        Node currentNode = head;
+        while(currentNode!=null){
+            sb.append(currentNode.data);
+            if(currentNode.next!=null){
+                sb.append(" -> ");
+            }
+            currentNode = currentNode.next;
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+```
+I have overridden the toString() method to provide a human-readable representation of the linked list, which is especially useful for debugging and validation of internal state.
+
+The key aspect here is that I am adapting the default object representation into a structural visualization of the data structure.
+
+What this implementation does
+- If the list is empty → returns "[]", which clearly represents no elements
+- Otherwise:
+  - Iterates from head to tail
+  - Appends each node’s data
+  - Uses " -> " to visually represent linkage between nodes
+  - Wraps the entire structure in brackets [...]
+ 
+Example output:
+```
+[10 -> 20 -> 30]
+```
+
+
