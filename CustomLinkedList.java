@@ -139,4 +139,34 @@ public class CustomLinkedList<T> {
         return false;
     }
 
+    // --- RETRIEVAL & UTILITY METHODS ---
+    // Gets element at index: O(n)
+    public T get(int index){
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException("Invalid Index");
+        Node currentNode = head;
+        for (int i = 0; i < index; i++) {
+            currentNode = currentNode.next;
+        }
+        return currentNode.data;
+    }
+
+    //Check if node with particular data exists in list or not: O(n)
+    public boolean contains(T data){
+        Node currentNode = head;
+        while(currentNode!=null){
+            if(currentNode.data.equals(data)) return true;
+            currentNode = currentNode.next;
+        }
+        return false;
+    }
+    public int getSize(){
+        return size;
+    }
+
+    public void clear(){
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
 }
