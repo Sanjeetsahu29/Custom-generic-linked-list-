@@ -2,7 +2,7 @@
 Building a custom generic linked list from scratch is a fantastic exercise. It is essentially a rite of passage for understanding how Java handles object references, memory, and generics.
 While Java provides a built-in java.util.LinkedList, creating our own gives us complete control and a deep understanding of what happens under the hood.
 Before we look at the code, it helps to visualize what we are building: a chain of independent objects (nodes) scattered in memory, connected only by reference pointers.<br><hr>
-**Here is a comprehensive implementation of a Singly Linked List in Java, utilizing Generics (<T>) so it can hold any object type.**
+## Here is a comprehensive implementation of a Singly Linked List in Java, utilizing Generics (<T>) so it can hold any object type.
 ```
 public class CustomLinkedList<T> {
     private class Node{
@@ -27,3 +27,22 @@ In essence, this design ensures:
 - The internal structure remains protected and consistent
 - The implementation can evolve without affecting external consumers
 - The class exposes behavior, not its internal mechanics
+
+```
+private Node head;
+    private Node tail;
+    private int size;
+    public CustomLinkedList(){
+        this.head=null;
+        this.tail=null;
+        this.size=0;
+    }
+```
+I have introduced three core state variables—head, tail, and size—along with a constructor that initializes the linked list into a well-defined empty state.
+
+- head represents the entry point of the list, i.e., the first node.
+- tail represents the last node, enabling efficient O(1) insertions at the end.
+- size maintains a real-time count of elements, avoiding the need for traversal when querying length.
+
+All three fields are marked as private, which again reinforces the Encapsulation principle—the internal state of the list cannot be directly accessed or mutated from outside the class. This ensures that structural invariants (like correct head/tail linkage and accurate size tracking) are only modified through controlled operations.
+
