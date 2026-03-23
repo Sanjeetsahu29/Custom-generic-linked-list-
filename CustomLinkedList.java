@@ -51,4 +51,24 @@ public class CustomLinkedList<T> {
         size++;
     }
 
+    public void addAt(int index, T data){
+        if(index<0 || index>size) throw new IndexOutOfBoundsException("Invalid Index");
+        if(index == 0){
+            addFirst(data);
+            return;
+        }
+        if(index == size){
+            addLast(data);
+            return;
+        }
+        Node newNode = new Node(data);
+        Node currentNode = head;
+        for (int i = 0; i < index-1; i++) {
+            currentNode = currentNode.next;
+        }
+        newNode.next = currentNode.next;
+        currentNode.next = newNode;
+        size++;
+    }
+
 }
