@@ -127,3 +127,108 @@ Then I handle edge cases explicitly:
 - index == 0 → delegate to addFirst(data)
 - index == size → delegate to addLast(data)
 
+```
+// ----- Removal Method -----------
+    public T removeFirst(){
+        if (isEmpty()) throw new RuntimeException("List is empty");
+        T data = head.data;
+        head = head.next;
+        size--;
+        if(isEmpty()) tail = null;
+        return data;
+    }
+
+    public T removeLast(){
+        if (isEmpty()) throw new RuntimeException("List is empty");
+        if (size == 1) return removeFirst();
+        /*
+            T data = tail.data;
+            tail = tail.next;
+            size--;
+            if(isEmpty()) head = null;
+            return data;
+        This code look fine, but here you lost tail reference because this is single linked list,
+        after removing the tail by tail = tail.next we will the loose the reference of tail which should
+        point to the previous next, so in singly linked list we can't just do tail = tail.previous
+         */
+
+        Node currentNode = head;
+        while(currentNode.next!=tail) currentNode = currentNode.next;
+        T data = tail.data;
+        currentNode.next = null;
+        tail = currentNode;
+        size--;
+        return data;
+    }
+
+    public T removeAt(int index){
+        if(index<0 || index>=size) throw new IndexOutOfBoundsException("invalid Index");
+        if(index == 0) return removeFirst();
+        if(index == size-1) return  removeLast();
+        Node currentNode = head;
+        for (int i = 0; i < index-1; i++) {
+            currentNode = currentNode.next;
+        }
+        T data = currentNode.next.data;
+        currentNode.next = currentNode.next.next;
+        size--;
+        return data;
+    }
+    
+    public boolean removeByData(T data){
+        if(isEmpty()) return false;
+        if(head.data.equals(data)){
+            removeFirst();
+            return true;
+        }
+        Node currentNode = head;
+        while(currentNode.next!=null && !currentNode.next.data.equals(data)){
+            currentNode = currentNode.next;
+        }
+        if(currentNode.next!=null){
+            if(currentNode.next == tail){
+                tail = currentNode;
+            }
+            currentNode.next = currentNode.next.next;
+            size--;
+            return true;
+        }
+        return false;
+    }
+```
+
+I have implemented a complete set of removal operations that cover all major deletion scenarios—by position (removeFirst, removeLast, removeAt) and by value (removeByData). The focus here is on safe pointer manipulation, invariant preservation, and handling edge cases correctly.
+
+1. removeFirst() — Head Removal (O(1))
+   I remove the head node by:
+   - Storing head.data
+   - Moving head to head.next
+   - Decrementing size
+
+2. removeLast() — Tail Removal (O(n))
+   This is where deeper understanding of singly linked list limitations comes in.
+   - If only one element exists → delegate to removeFirst() (code reuse + correctness)
+   - Otherwise:
+     - Traverse to the node just before tail
+     - Update:
+       - currentNode.next = null
+       - tail = currentNode
+
+3. removeAt(int index) — Indexed Removal (O(n))
+   This method generalizes deletion:
+   - Boundary validation ensures safe access
+   - Delegates:
+     - index == 0 → removeFirst()
+     - index == size-1 → removeLast()
+     - For middle removal:
+       - Traverse to index - 1
+       - Bypass the node: currentNode.next = currentNode.next.next
+
+4. removeByData(T data) — Value-Based Removal (O(n))
+   This method introduces search + delete combined logic:
+   - If head matches → delegate to removeFirst()
+   - Otherwise:
+     - Traverse while checking currentNode.next
+     - Once found:
+       - If target is tail, update tail
+       - Relink pointers to skip the node
