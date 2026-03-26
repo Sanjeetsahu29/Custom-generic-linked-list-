@@ -30,13 +30,13 @@ In essence, this design ensures:
 
 ```
 private Node head;
-    private Node tail;
-    private int size;
-    public CustomLinkedList(){
-        this.head=null;
-        this.tail=null;
-        this.size=0;
-    }
+private Node tail;
+private int size;
+public CustomLinkedList(){
+    this.head=null;
+    this.tail=null;
+    this.size=0;
+}
 ```
 I have introduced three core state variables—head, tail, and size—along with a constructor that initializes the linked list into a well-defined empty state.
 
